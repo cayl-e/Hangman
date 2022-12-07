@@ -35,6 +35,8 @@ public class Driver {
         Scanner input = new Scanner(System.in);
         boolean gameInProgress = true;
         String nextChar = "";
+        int wordLength = 0;
+        int numGuessed = 0;
         
         // starting game
         System.out.println("WELCOME TO THE HANGMAN GAME");
@@ -47,7 +49,10 @@ public class Driver {
                 gameString += currChar;
                 gameString += " ";
             }
-            else gameString += "_ ";
+            else {
+                gameString += "_ ";
+                wordLength++;
+            }
                 
         }
         StringBuilder updatedString =  new StringBuilder(gameString);
@@ -81,7 +86,7 @@ public class Driver {
             }
             
             //if the character is not in the word
-            else if (!word.contains(nextChar.toLowerCase()) || !word.contains(nextChar.toUpperCase())) {
+            else if (!word.contains(nextChar.toLowerCase()) && !word.contains(nextChar.toUpperCase())) {
                 System.out.println("That letter is not in the word...");
             }
             
@@ -89,11 +94,16 @@ public class Driver {
             for (int i = 0; i < word.length(); i++) {
                 if (word.toUpperCase().charAt(i) == nextChar.charAt(0) || word.toLowerCase().charAt(i) == nextChar.charAt(0)) {
                     updatedString.setCharAt(i*2, nextChar.charAt(0));
+                    numGuessed++;
                 }
             }
             
-
             System.out.println(updatedString);
+            
+            if (numGuessed == wordLength) {
+                System.out.println("YOU WIN!");
+                gameInProgress = false;
+            }
         }
         
         input.close();
