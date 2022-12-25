@@ -189,6 +189,7 @@ public class Driver {
             
             if (numWrong == maxWrong) {
                 System.out.println("YOU LOSE! :(");
+                System.out.println("The answer was: " + word);
                 gameInProgress = false;
             }
             else if (numGuessed == wordLength) {
