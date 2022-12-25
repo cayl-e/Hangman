@@ -23,7 +23,13 @@ public class Driver {
         };
         Category cat2 = new Category("Musical Artist", musicalArtists);
         
-        Category[] categories = {cat1, cat2};
+        String[] cities = {
+            "Tokyo", "Amsterdam", "Paris", "Manila", "Busan", "Seoul", "Beijing",
+            "New York City", "Barcelona", "London"
+        };
+        Category cat3 = new Category("Cities", cities);
+        
+        Category[] categories = {cat1, cat2, cat3};
         
         // choosing a word
         Random rand = new Random();
@@ -37,6 +43,8 @@ public class Driver {
         String nextChar = "";
         int wordLength = 0;
         int numGuessed = 0;
+        int numWrong = 0;
+        int maxWrong = 6;
         
         // starting game
         System.out.println("WELCOME TO THE HANGMAN GAME");
@@ -55,8 +63,60 @@ public class Driver {
             }
                 
         }
+        
+        String hangmanStart =  ("     -----     \n"
+                              + "     |   |     \n"
+                              + "     |         \n"
+                              + "     |         \n"
+                              + "     |         \n"
+                              + "    _|_        \n");
+
+        String hangman1 =  ("     -----     \n"
+                          + "     |   |     \n"
+                          + "     |   O     \n"
+                          + "     |         \n"
+                          + "     |         \n"
+                          + "    _|_        \n");
+        
+        String hangman2 =  ("     -----     \n"
+                          + "     |   |     \n"
+                          + "     |   O     \n"
+                          + "     |   I     \n"
+                          + "     |         \n"
+                          + "    _|_        \n");
+        
+        String hangman3 =  ("     -----     \n"
+                            + "     |   |     \n"
+                            + "     |   O     \n"
+                            + "     |  /I     \n"
+                            + "     |         \n"
+                            + "    _|_        \n");
+        
+        String hangman4 =  ("     -----     \n"
+                            + "     |   |     \n"
+                            + "     |   O     \n"
+                            + "     |  /I\\    \n"
+                            + "     |         \n"
+                            + "    _|_        \n");
+        
+        String hangman5 =  ("     -----     \n"
+                            + "     |   |     \n"
+                            + "     |   O     \n"
+                            + "     |  /I\\    \n"
+                            + "     |  /     \n"
+                            + "    _|_        \n");
+        
+        String hangman6 =  ("     -----     \n"
+                            + "     |   |     \n"
+                            + "     |   O     \n"
+                            + "     |  /I\\    \n"
+                            + "     |  / \\   \n"
+                            + "    _|_        \n");
+        
+         
         StringBuilder updatedString =  new StringBuilder(gameString);
 
+        System.out.println(hangmanStart);
         System.out.println(updatedString);
         
         while(gameInProgress) {
@@ -88,6 +148,33 @@ public class Driver {
             //if the character is not in the word
             else if (!word.contains(nextChar.toLowerCase()) && !word.contains(nextChar.toUpperCase())) {
                 System.out.println("That letter is not in the word...");
+                numWrong++;
+                switch(numWrong) {
+                    case 1:
+                        //head
+                        System.out.println(hangman1);
+                        break;
+                    case 2:
+                        //body
+                        System.out.println(hangman2);
+                        break;
+                    case 3:
+                        //left arm
+                        System.out.println(hangman3);
+                        break;
+                    case 4:
+                        //right arm
+                        System.out.println(hangman4);
+                        break;
+                    case 5:
+                        //left leg
+                        System.out.println(hangman5);
+                        break;
+                    case 6:
+                        //right leg
+                        System.out.println(hangman6);
+                        break;
+                }
             }
             
             // place the found letters
@@ -100,7 +187,12 @@ public class Driver {
             
             System.out.println(updatedString);
             
-            if (numGuessed == wordLength) {
+            if (numWrong == maxWrong) {
+                System.out.println("YOU LOSE! :(");
+                System.out.println("The answer was: " + word);
+                gameInProgress = false;
+            }
+            else if (numGuessed == wordLength) {
                 System.out.println("YOU WIN!");
                 gameInProgress = false;
             }
